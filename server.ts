@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import { createServer as createViteServer } from 'vite';
 import { loadEnv } from './config/env';
 import { supabase as supabaseAdmin } from './config/supabase';
 import apiRoutes from './routes/api.routes';
@@ -80,6 +79,7 @@ async function startServer() {
     });
   } else if (process.env.NODE_ENV !== 'production') {
     // Vite middleware for full-stack development
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
